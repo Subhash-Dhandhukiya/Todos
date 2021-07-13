@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "330346466412",
+    "project_id": "react-firebase-19871",
+    "storage_bucket": "react-firebase-19871.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330346466412:android:d54f862a4279dde4841c49",
+        "android_client_info": {
+          "package_name": "com.training"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "330346466412-edogn9lcimm0lkgsrfqdq5rnpgqii1sg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5_AS9_mL-Oa0HCt5Jg1Xu0zyk5JJi4JI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "330346466412-edogn9lcimm0lkgsrfqdq5rnpgqii1sg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
