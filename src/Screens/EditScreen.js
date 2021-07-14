@@ -5,6 +5,8 @@ import { ButtonComponent, TextInputComponent } from '../Component'
 import firestore from '@react-native-firebase/firestore'
 import { HOMESCREEN } from '../Constant/route'
 
+import {useDispatch} from 'react-redux'
+import {LoadingStart,LoadingStop} from '../Redux/Action'
 
 const AddTodos = ({ route, navigation }) => {
 
@@ -12,30 +14,35 @@ const AddTodos = ({ route, navigation }) => {
     const [data, setData] = useState('');
 
     const { title, description, path } = route.params;
+    const dispatch=useDispatch();
 
     const handleOnPress = async () => {
-
+        Keyboard.dismiss();
         if (!Title) {
             alert("Title is Required");
         } else if (!data) {
             alert("Description is required");
         } else {
-
-            Keyboard.dismiss();
-            const uid = await getAsyncStorage(keys.uuid);
-
-           firestore()
-                .collection(uid)
-                .doc(path)
-                .update({
-                    Title:Title,
-                    Discription:data
-                })
-                .then(()=>{
-                    setTitle('')
-                    setData('')
-                    navigation.navigate(HOMESCREEN);
-                })
+            dispatch(LoadingStart());
+            try {
+                const uid = await getAsyncStorage(keys.uuid);
+                firestore()
+                    .collection(uid)
+                    .doc(path)
+                    .update({
+                        Title: Title,
+                        Discription: data
+                    })
+                    .then(() => {
+                        dispatch(LoadingStop());
+                        setTitle('')
+                        setData('')
+                        navigation.navigate(HOMESCREEN);
+                    })
+            } catch (error) {
+                dispatch(LoadingStop);
+                alert(error);
+            }
         }
     }
 

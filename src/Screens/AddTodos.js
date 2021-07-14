@@ -2,33 +2,40 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, Keyboard } from 'react-native'
 import { getAsyncStorage, keys } from '../AsyncStorage'
 import { ButtonComponent, TextInputComponent } from '../Component'
-// import firebase from '../Firebase/config'
-
 import firestore from '@react-native-firebase/firestore'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { LoadingStart, LoadingStop } from '../Redux/Action'
 
 const AddTodos = ({ navigation }) => {
 
     const [title, setTitle] = useState('');
     const [data, setData] = useState('');
 
+    const dispatch = useDispatch();
+
 
     const handleOnPress = async () => {
-
         Keyboard.dismiss();
-        const uid = await getAsyncStorage(keys.uuid);
+        dispatch(LoadingStart());
+        try {
+            const uid = await getAsyncStorage(keys.uuid);
 
-        firestore()
-            .collection(uid)
-            .add({
-                Title:title,
-                Discription:data
-            })
-            .then(() => {
-                setData('');
-                setTitle('');
-                navigation.goBack()
-            });
+            firestore()
+                .collection(uid)
+                .add({
+                    Title: title,
+                    Discription: data
+                })
+                .then(() => {
+                    setData('');
+                    setTitle('');
+                    dispatch(LoadingStop());
+                    navigation.goBack()
+                });
+        } catch (error) {
+            dispatch(LoadingStop())
+        }
     }
 
 
@@ -66,7 +73,7 @@ const AddTodos = ({ navigation }) => {
     )
 }
 
-export default AddTodos
+export default AddTodos;
 
 const styles = StyleSheet.create({
     container: {

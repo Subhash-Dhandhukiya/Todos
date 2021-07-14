@@ -1,12 +1,13 @@
-import React from 'react'
 
 const initialState=false;
-
 const changeLoading=(state=initialState,action)=>{
     switch(action.type){
-        case true: return true;
-        case false: return false;
-        default : return false;
+        case "LOADING_START":
+            return true;
+        case "LOADING_STOP":
+            return false;
+        default:
+            return state; 
     }
 }
 

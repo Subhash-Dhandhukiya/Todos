@@ -6,9 +6,13 @@ import { loginRequest } from '../Network/index'
 import { setAsyncStorage, keys } from '../AsyncStorage/index'
 import { HOMESCREEN, SIGNUPSCREEN } from '../Constant/route'
 
+import {LoadingStart,LoadingStop} from '../Redux/Action'
+import {useDispatch} from 'react-redux'
+
 const SignInScreen = ({ navigation }) => {
 
     const [data, setData] = useState({ email: '', password: '' })
+    const dispatch=useDispatch();
 
     const textInputChange = (name, val) => {
         setData({
@@ -24,6 +28,8 @@ const SignInScreen = ({ navigation }) => {
         } else if (!data.password) {
             alert("Password is required");
         } else {
+            
+            dispatch(LoadingStart());
             loginRequest(data.email, data.password)
                 .then((res) => {
                     if (res.user.emailVerified) {
@@ -33,13 +39,16 @@ const SignInScreen = ({ navigation }) => {
                         }
 
                         setAsyncStorage(keys.uuid, res.user.uid);
+                        dispatch(LoadingStop());
                         navigation.replace(HOMESCREEN);
                     }
                     else{
+                        dispatch(LoadingStop());
                         alert("Please first Verify your Email");
                     }
                 })
                 .catch(error => {
+                    dispatch(LoadingStop());
                     alert("Invalid email or password")
                 })
         }

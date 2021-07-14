@@ -1,11 +1,11 @@
-export function startLoading(){
-    return{
-        type:true
+export const LoadingStart=()=>{
+    return {
+        type:"LOADING_START"
     }
 }
 
-export function stopLoading(){
-    return {
-        type:false
+export const LoadingStop=()=>{
+    return{
+        type:"LOADING_STOP"
     }
 }

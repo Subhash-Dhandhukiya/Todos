@@ -3,13 +3,17 @@ import { View, Text, StyleSheet, Dimensions, Platform, TouchableOpacity, StatusB
 import * as Aimatable from 'react-native-animatable'
 import { ButtonComponent, TextInputComponent } from '../Component'
 import {signupRequest} from '../Network'
-import firebase from '../Firebase/config'
 import LogoutUser from '../Network/logout'
 import {SIGNINSCREEN} from '../Constant/route'
+
+
+import {useDispatch} from 'react-redux'
+import {LoadingStart,LoadingStop} from '../Redux/Action'
 
 const SignInScreen = ({ navigation }) => {
 
     const [data, setData] = useState({ email: '', password: '', confirmPassword: '',name:'' })
+    const dispatch=useDispatch();
 
     const textInputChange = (name, val) => {
         setData({
@@ -30,6 +34,7 @@ const SignInScreen = ({ navigation }) => {
         } else if (data.password !== data.confirmPassword) {
             alert("password does not match")
         } else {
+            dispatch(LoadingStart());
             signupRequest(data.email,data.password)
                 .then((res)=>{
                     if(res.additionalUserInfo==null){
@@ -38,11 +43,13 @@ const SignInScreen = ({ navigation }) => {
                     }   
                     // (res);
                     res.user.sendEmailVerification()
+                    dispatch(LoadingStop());
                     alert("Verify Email to Login ")
                     LogoutUser();
                     navigation.navigate(SIGNINSCREEN);
                 })
                 .catch((error)=>{
+                    dispatch(LoadingStop);
                     alert(error)
                 })
         }
