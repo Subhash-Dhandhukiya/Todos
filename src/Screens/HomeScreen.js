@@ -5,6 +5,7 @@ import firestore from '@react-native-firebase/firestore';
 import { getAsyncStorage, keys, clearAsyncStorage } from '../AsyncStorage/index'
 import { DeleteIcon, EditIcon, LogoutIcon } from '../../assets/Icon'
 import { logoutRequest } from '../Network'
+import * as Animatable from 'react-native-animatable'
 
 import { useDispatch } from 'react-redux'
 import { LoadingStart, LoadingStop } from '../Redux/Action'
@@ -108,7 +109,11 @@ const HomeScreen = ({ navigation }) => {
 
         return (
             <>
-                <View style={{ flexDirection: 'row', height: 60 }}>
+                <Animatable.View 
+                    animation="zoomIn"
+                    duration={1000}
+                    style={{ flexDirection: 'row', height: 60 }}
+                >
                     <TouchableOpacity onPress={() => navigationScreen(title, description, path)} style={{ width: '80%', justifyContent: 'center', paddingLeft: 20 }}>
                         <Text style={{ fontSize: 18, color: "#000", letterSpacing: 0.7 }}>{title}</Text>
                         <Text style={{ fontSize: 14, color: "gray", letterSpacing: 0.5, width: "95%" }} numberOfLines={1}>{description}</Text>
@@ -135,7 +140,7 @@ const HomeScreen = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </View>
+                </Animatable.View>
                 <View style={{ height: 1, backgroundColor: '#E1E5EA' }} />
             </>
         );

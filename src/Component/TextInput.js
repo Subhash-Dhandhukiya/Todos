@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 
-const TextInputComponent = ({ placeholder, onChangeText, numberOfLines,value,secureTextEntry,autoCapitalize }) => {
+const TextInputComponent = ({ placeholder, onChangeText, numberOfLines,value,secureTextEntry,autoCapitalize,multiline,textAlignVertical }) => {
     return (
         <View style={styles.container}>
             <TextInput
@@ -12,6 +12,8 @@ const TextInputComponent = ({ placeholder, onChangeText, numberOfLines,value,sec
                 secureTextEntry={secureTextEntry}
                 autoCapitalize={autoCapitalize}
                 numberOfLines={numberOfLines}
+                multiline={multiline}
+                textAlignVertical={textAlignVertical}
             />
         </View>
     );

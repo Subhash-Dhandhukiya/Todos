@@ -59,6 +59,9 @@ const AddTodos = ({ navigation }) => {
                         placeholder="Description"
                         onChangeText={setData}
                         value={data}
+                        multiline={true}
+                        numberOfLines={12}
+                        textAlignVertical="top"
                     />
 
                     <View style={{ alignItems: 'center' }}>
